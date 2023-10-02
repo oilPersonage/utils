@@ -1,0 +1,40 @@
+const tabs = [...document.querySelectorAll('.tabs__item')]
+const content = [...document.querySelectorAll('.tabs__contentItem')]
+
+const heights = content.map(el => el.clientHeight)
+const paddingV = 12;
+const paddingH = 24;
+
+let activeIndex = 0;
+let prevIndex = 0;
+
+function setStyle() {
+	const currentContent = content[activeIndex]
+	currentContent.classList.add('active')
+	currentContent.style.maxHeight = heights[activeIndex] + paddingV * 2 + 'px'
+	currentContent.style.padding = `${paddingV}px ${paddingH}px`
+}
+
+function removeStyle() {
+	const currentContent = content[prevIndex]
+	currentContent.classList.remove('active')
+	tabs[prevIndex].classList.remove('active')
+
+	currentContent.style.maxHeight = '0px'
+	currentContent.style.padding = `0px ${paddingH}px`
+}
+
+setStyle(content[activeIndex], activeIndex)
+
+tabs[0].classList.add('active')
+
+function onClick({target}) {
+	const dataName = target.getAttribute('data-tab');
+	activeIndex = content.findIndex(el => el.getAttribute('data-tabContent') === dataName)
+	setStyle()
+	removeStyle()
+	target.classList.add('active')
+	prevIndex = activeIndex;
+}
+
+tabs.forEach(el => el.addEventListener('click', onClick))
