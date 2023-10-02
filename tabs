@@ -24,13 +24,24 @@ function removeStyle() {
 	currentContent.style.padding = `0px ${paddingH}px`
 }
 
-setStyle(content[activeIndex], activeIndex)
+function initStyle() {
+	tabs.forEach(el => el.classList.remove('active'))
+	content.forEach(el => {
+		el.classList.remove('active')
+		el.style.maxHeight = '0px'
+		el.style.padding = `0px ${paddingH}px`
+	})
+}
+
+initStyle()
+setStyle()
 
 tabs[0].classList.add('active')
 
 function onClick({target}) {
 	const dataName = target.getAttribute('data-tab');
 	activeIndex = content.findIndex(el => el.getAttribute('data-tabContent') === dataName)
+	if (activeIndex === prevIndex) return;
 	setStyle()
 	removeStyle()
 	target.classList.add('active')
