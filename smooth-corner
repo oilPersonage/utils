@@ -13,9 +13,13 @@ class SmoothCornersPainter {
 
 		const aspect = b / a;
 
-		const nX2 = 2 / nX
+		let nX2 = 2 / nX
 		let nY2 = nY ? 2 / nY : nX2
-		nY2 /= aspect;
+		if (a < b) {
+			nY2 /= aspect;
+		} else {
+			nX2 *= aspect;
+		}
 		const steps = 360
 		const step = (2 * Math.PI) / steps
 		const points = t => {
