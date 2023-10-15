@@ -1,3 +1,10 @@
+// HTML
+<script>
+	if (CSS && 'paintWorklet' in CSS) CSS.paintWorklet.addModule('./src/js/corner.js')
+</script>
+
+
+
 class SmoothCornersPainter {
 	static get inputProperties() {
 		return ['--smooth-corners']
@@ -66,3 +73,10 @@ class SmoothCornersPainter {
 
 registerPaint("smooth-corners", SmoothCornersPainter);
 // eslint-disable-next-line no-undef
+
+// CSS
+.mask {
+  --smooth-corners: 12;
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+}
